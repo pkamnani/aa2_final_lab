@@ -2,3 +2,75 @@
 
 # Environment Settings
 GUID: 05c1
+
+# Flask Application variables
+flask_app_name: resource_hub
+flask_user: flask
+flask_home: /opt
+flask_repo: https://github.com/tonykay/resource_hub.git
+flask_scm_ref: main
+flask_app_lauch_script: /usr/local/bin/launch_resource_hub
+virtualenv_name: "venv-{{ flask_app_name }}"
+virtualenv_home: /opt/virtual_envs
+virtualenv_python: /usr/bin/python3
+app_yum_packages:
+  - autoconf
+  - automake
+  - git
+  - gcc
+  - libtool
+  - python3
+  - python3-psycopg2
+pip_dependencies:
+  - virtualenv
+  - psycopg2-binary==2.8.6
+
+# Database variables
+# postgres_rhel7_repo: "https://download.postgresql.org/pub/repos/yum/12/redhat/rhel-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm"
+postgres_packages:
+  - postgresql
+  - postgresql-server
+  - postgresql-contrib
+  - postgresql-libs
+postgres_library: python3-psycopg2
+postgres_data_dir: /var/lib/pgsql/data
+postgres_bin_path: /usr/bin
+postgres_service: postgresql.service
+postgres_port: 5432
+postgres_user: postgres
+postgres_users:
+  - name: flask
+    password: "{{ vault_postgres_password }}"
+    database: flask_db
+    state: present
+    priv: ALL
+postgres_databases:
+  - name: flask_db
+    owner: flask
+  - name: books_store
+    owner: flask
+
+# Load Balancer Variables
+load_balancer_packages:
+  - haproxy
+
+# Openstack variables
+ansible_user: devops
+virtual_env:
+  directory: /var/lib/awx/venv
+  name: final-lab
+openstack:
+  deployment: "dev"
+  flavor: "GLOBAL-CPU_4_Memory_8192_Disk_30_flavor"
+  image: "rhel-8.3"
+  key_name: "{{ GUID }}-keypair"
+  nics:
+    - net-name: "{{ GUID }}-dev-network"
+  security_groups: "{{ GUID }}-HostSG"
+  userdata: |
+      {%- raw -%}#!/bin/bash
+      nmcli con mod "System eth0" ipv4.dns {% endraw -%}{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] | default('8.8.8.8') }}{%- raw -%} && \
+      nmcli con mod "System eth0" ipv4.dns-search "example.com" && \
+      nmcli con mod "System eth0" ipv4.ignore-auto-dns yes && \
+      systemctl restart NetworkManager.service
+      {% endraw %}

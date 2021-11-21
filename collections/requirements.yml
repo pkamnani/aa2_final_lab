@@ -1,2 +1,5 @@
 ---
-collections: 
+collections:
+  - community.general
+  - openstack.cloud
+  - redhat.satellite

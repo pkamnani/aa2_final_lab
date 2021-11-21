@@ -1,0 +1,22 @@
+---
+- name: create virtual env
+  pip:
+    virtualenv: "{{ virtual_env.name }}"
+    requirements: "{{ playbook_dir }}/requirements.txt"
+    chdir: "{{ virtual_env.directory }}"
+
+- name: copy execute wrapper
+  copy:
+    src: execute
+    dest: "{{ virtual_env.directory }}/{{ virtual_env.name }}/bin/execute"
+    mode: "0755"
+
+- name: install required collections
+  command: "{{ virtual_env.directory }}/{{ virtual_env.name }}/bin/execute ansible-galaxy collection  install --force -r {{ playbook_dir }}/collections/requirements.yml"
+  args:
+    chdir: "{{ virtual_env.directory }}"
+
+- name: install required roles
+  command: "{{ virtual_env.directory }}/{{ virtual_env.name }}/bin/execute ansible-galaxy role        install --force -r {{ playbook_dir }}/requirements.yml"
+  args:
+    chdir: "{{ virtual_env.directory }}"
