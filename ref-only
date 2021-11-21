@@ -1,0 +1,9 @@
+# Sample Style Guide Used
+
+- Boolean variables are to be either yes or no.  NOT true/false
+- Spaces in filenames should be represented by an underscore _
+- Spaces in varialbes should be represented by an underscore _
+- Spaces in role names should be represented by an underscore -
+- 2 spaces for indentation
+- whitespacing - use of comments (which start with ‘# ’), is encouraged (Thats a # followed by a space).
+
