@@ -1,0 +1,43 @@
+---
+- name: Provision Openstack servers
+  hosts: localhost
+  vars_files:
+    - vars/main-vars.yml
+  tasks:
+    - name: Get control node facts from Openstack
+      os_server_info:
+        cloud: "{{ instance_cloud | default(omit) }}"
+        server: control
+      register: control_node_info
+    
+    - name: Provision dev-lb instance
+      include_role:
+        name: os_instance
+      vars:
+        instance_name: dev-lb
+        instance_ns: "{{ control_node_info.openstack_servers[0].private_v4 }}"
+        instance_metadata: "AnsibleGroup=load_balancers,deployment_name=dev"
+
+    - name: Provision dev-db instance
+      include_role:
+        name: os_instance
+      vars:
+        instance_name: dev-db
+        instance_ns: "{{ control_node_info.openstack_servers[0].private_v4 }}"
+        instance_metadata: "AnsibleGroup=database_servers,deployment_name=dev"
+    
+    - name: Provision web1 instance
+      include_role:
+        name: os_instance
+      vars:
+        instance_name: dev-web1
+        instance_ns: "{{ control_node_info.openstack_servers[0].private_v4 }}"
+        instance_metadata: "AnsibleGroup=app_servers,deployment_name=dev"
+    
+    - name: Provision web2 instance
+      include_role:
+        name: os_instance
+      vars:
+        instance_name: dev-web2
+        instance_ns: "{{ control_node_info.openstack_servers[0].private_v4 }}"
+        instance_metadata: "AnsibleGroup=app_servers,deployment_name=dev"

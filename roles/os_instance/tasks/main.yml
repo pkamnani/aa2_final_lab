@@ -1,0 +1,20 @@
+---
+- name: Create instance {{ instance_name }}
+  os_server:
+    cloud: "{{ instance_cloud | default(omit) }}"
+    name: "{{ instance_name }}"
+    image: "{{ instance_image }}"
+    key_name: "{{ instance_keypair }}"
+    flavor: "{{ instance_flavor }}"
+    security_groups: "{{ instance_sg }}"
+    delete_fip: yes
+    wait: yes
+    nics:
+      - net-name: "{{ instance_int_net }}"
+    meta: "{{ instance_metadata }}"
+    userdata: |
+      #cloud-config
+      runcmd:
+        - [ sh, -c, echo "PEERDNS=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0]
+        - [ sh, -c, echo "DNS1={{ instance_ns }}" >> /etc/sysconfig/network-scripts/ifcfg-eth0]
+        - [ systemctl, restart, NetworkManager]

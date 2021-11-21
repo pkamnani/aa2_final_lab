@@ -1,0 +1,21 @@
+---
+- import_playbook: in-memory-inventory.yml
+
+- name: Register instances to Satellite
+  hosts: all
+  become: yes
+  gather_facts: no
+  vars_files:
+    - vars/main-vars.yml
+  pre_tasks:
+    - name: Wait for instances to be reachable
+      wait_for_connection:
+    - name: Check Satellite is reachable
+      uri:
+        url: "{{ satellite_ca_rpm }}"
+      register: satellite_rpm
+      until: satellite_rpm.status == 200
+      delay: 10
+      retries: 12
+  roles:
+    - satellite

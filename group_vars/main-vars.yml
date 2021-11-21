@@ -1,0 +1,15 @@
+# Common vars
+GUID: "{{ lookup('env', 'GUID') | default(omit) }}"
+
+# Openstack instance variables
+#instance_cloud: "{{ GUID }}-project"
+instance_keypair: "{{ GUID }}-keypair"
+instance_image: "rhel-8.3"
+instance_flavor: "GLOBAL-CPU_4_Memory_8192_Disk_30_flavor"
+instance_sg: "{{ GUID }}-HostSG"
+instance_int_net: "{{ GUID }}-dev-network"
+
+# Satellite variables
+satellite_activationkey: gpte-labs-rhel8
+satellite_org: prod
+satellite_ca_rpm: http://satellite.example.com/pub/katello-ca-consumer-latest.noarch.rpm

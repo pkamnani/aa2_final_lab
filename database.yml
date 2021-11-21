@@ -1,0 +1,9 @@
+---
+- import_playbook: in-memory-inventory.yml
+
+- name: Deploy, configure, and populate Postgres 12
+  hosts: database_servers
+  become: true
+  gather_facts: false
+  roles:
+    - postgresql
