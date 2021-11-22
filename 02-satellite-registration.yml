@@ -1,5 +1,5 @@
 ---
-- import_playbook: in-memory-inventory.yml
+- import_playbook: 00-in-memory-inventory.yml
 
 - name: Register instances to Satellite
   hosts: all
