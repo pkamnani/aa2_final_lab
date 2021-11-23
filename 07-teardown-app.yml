@@ -21,6 +21,7 @@
       service:
         name: "{{ postgres_service }}"
         state: stopped
+      failed_when: false
 
     - name: Remove Postgres packages
       package:
