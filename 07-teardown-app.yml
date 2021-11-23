@@ -17,6 +17,10 @@
     postgres_port: 5432
 
   tasks:
+    - name: Stop Postgres
+      service:
+        name: "{{ postgres_service }}"
+        state: stopped
 
     - name: Remove Postgres packages
       package:
