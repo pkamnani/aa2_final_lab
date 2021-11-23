@@ -1,19 +1,19 @@
 ---
 - import_playbook: 00-in-memory-inventory.yml
 
-- name: Teardown Postgres 12
+- name: Teardown Postgres 14
   hosts: database_servers
   become: true
   gather_facts: false
   vars:
     postgres_rhel8_repo: pgdg-redhat-repo-latest
     postgres_packages:
-      - postgresql12
-      - postgresql12-server 
-      - postgresql12-contrib 
-      - postgresql12-libs
+      - postgresql14
+      - postgresql14-server 
+      - postgresql14-contrib 
+      - postgresql14-libs
     postgres_library: "python3-psycopg2"
-    postgres_10_data_dir: /var/lib/pgsql/12/data
+    postgres_10_data_dir: /var/lib/pgsqldata
     postgres_port: 5432
 
   tasks:
@@ -33,9 +33,9 @@
       loop_control:
         loop_var: __package
 
-    - name: Remove Postgres 12 data directory
+    - name: Remove Postgres 14 data directory
       file:
-        path: /var/lib/pgsql/12
+        path: /var/lib/pgsql
         state: absent
 
     - name: Remove Postgres user
