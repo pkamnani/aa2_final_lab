@@ -1,48 +1,31 @@
 ---
-- import_playbook: 00-in-memory-inventory.yml
 
-- name: Teardown | Database | Teardown Postgres 14
-  hosts: database_servers
-  become: true
-  gather_facts: false
-  vars:
-    postgres_rhel8_repo: pgdg-redhat-repo-latest
-    postgres_packages:
-      - postgresql14
-      - postgresql14-server 
-      - postgresql14-contrib 
-      - postgresql14-libs
-    postgres_library: "python3-psycopg2"
-    postgres_10_data_dir: /var/lib/pgsqldata
-    postgres_port: 5432
+- name: Teardown | Database | Stop Postgres
+  service:
+    name: "{{ postgres_service }}"
+    state: stopped
+  failed_when: false
 
-  tasks:
-    - name: Teardown | Database | Stop Postgres
-      service:
-        name: "{{ postgres_service }}"
-        state: stopped
-      failed_when: false
+- name: Teardown | Database | Remove Postgres packages
+  package:
+    name: "{{ __package }}"
+    state: absent
+  loop: 
+    - "{{ postgres_rhel8_repo }}"        
+    - "{{ postgres_library }}"
+    - "{{ postgres_packages }}"
+  loop_control:
+    loop_var: __package
 
-    - name: Teardown | Database | Remove Postgres packages
-      package:
-        name: "{{ __package }}"
-        state: absent
-      loop: 
-        - "{{ postgres_rhel8_repo }}"        
-        - "{{ postgres_library }}"
-        - "{{ postgres_packages }}"
-      loop_control:
-        loop_var: __package
+- name: Teardown | Database | Remove Postgres 14 data directory
+  file:
+    path: /var/lib/pgsql
+    state: absent
 
-    - name: Teardown | Database | Remove Postgres 14 data directory
-      file:
-        path: /var/lib/pgsql
-        state: absent
-
-    - name: Remove Postgres user
-      user:
-        name: postgres
-        state: absent
+- name: Remove Postgres user
+  user:
+    name: postgres
+    state: absent
 
 - name: Teardown | Application Servers | Teardown app_servers flask configuration
   hosts: app_servers

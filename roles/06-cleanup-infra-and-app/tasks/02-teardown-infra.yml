@@ -1,4 +1,5 @@
 ---
+
   - name: Teardown | Infrastructure | 
     os_server_info:
       cloud: "{{ instance_cloud | default(omit) }}"
