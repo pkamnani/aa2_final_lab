@@ -1,0 +1,20 @@
+---
+- name: 08 Teardown | Infrastructure | Cleanup infra resources
+  hosts: localhost
+  vars_files:
+    - vars/main-vars.yml
+  tasks:
+    - name: 08 Teardown | Infrastructure | 
+      os_server_info:
+        cloud: "{{ instance_cloud | default(omit) }}"
+        server: demo-*
+      register: demo_instances_info
+
+    - name: 08 Teardown | Infrastructure | 
+      os_server:
+        cloud: "{{ instance_cloud | default(omit) }}"
+        name: "{{ __instance.name }}"
+        state: absent
+      loop: "{{ demo_instances_info.openstack_servers }}"
+      loop_control:
+        loop_var: __instance

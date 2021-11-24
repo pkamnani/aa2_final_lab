@@ -4,5 +4,5 @@
   include_tasks: 01-teardown-app.yml
 
 - name: Cleanup | Tear Down Infrastructure
-  include_tasks: 01-teardown-infra.yml
+  include_tasks: 02-teardown-infra.yml
   
