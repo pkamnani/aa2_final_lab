@@ -7,14 +7,14 @@
     - name: 08 Teardown | Infrastructure | 
       os_server_info:
         cloud: "{{ instance_cloud | default(omit) }}"
-        server: demo-*
-      register: demo_instances_info
+        server: dev-*
+      register: dev_instances_info
 
     - name: 08 Teardown | Infrastructure | 
       os_server:
         cloud: "{{ instance_cloud | default(omit) }}"
         name: "{{ __instance.name }}"
         state: absent
-      loop: "{{ demo_instances_info.openstack_servers }}"
+      loop: "{{ dev_instances_info.openstack_servers }}"
       loop_control:
         loop_var: __instance

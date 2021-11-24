@@ -14,30 +14,30 @@
       include_role:
         name: 00-deploy-infra-openstack-instance
       vars:
-        instance_name: demo-lb
+        instance_name: dev-lb
         instance_ns: "{{ control_node_info.openstack_servers[0].private_v4 }}"
-        instance_metadata: "AnsibleGroup=load_balancers,deployment_name=demo"
+        instance_metadata: "AnsibleGroup=load_balancers,deployment_name=dev"
 
     - name: 01 Infra Provision | Provision database instance
       include_role:
         name: 00-deploy-infra-openstack-instance
       vars:
-        instance_name: demo-db
+        instance_name: dev-db
         instance_ns: "{{ control_node_info.openstack_servers[0].private_v4 }}"
-        instance_metadata: "AnsibleGroup=database_servers,deployment_name=demo"
+        instance_metadata: "AnsibleGroup=database_servers,deployment_name=dev"
     
     - name: 01 Infra Provision | Provision Webserver-1 instance
       include_role:
         name: 00-deploy-infra-openstack-instance
       vars:
-        instance_name: demo-web1
+        instance_name: dev-web1
         instance_ns: "{{ control_node_info.openstack_servers[0].private_v4 }}"
-        instance_metadata: "AnsibleGroup=app_servers,deployment_name=demo"
+        instance_metadata: "AnsibleGroup=app_servers,deployment_name=dev"
     
     - name: 01 Infra Provision | Provision Webserver01 instance
       include_role:
         name: 00-deploy-infra-openstack-instance
       vars:
-        instance_name: demo-web2
+        instance_name: dev-web2
         instance_ns: "{{ control_node_info.openstack_servers[0].private_v4 }}"
-        instance_metadata: "AnsibleGroup=app_servers,deployment_name=demo"
+        instance_metadata: "AnsibleGroup=app_servers,deployment_name=dev"

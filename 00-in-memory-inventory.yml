@@ -8,14 +8,14 @@
     - name: Collect instances info
       os_server_info:
         cloud: "{{ instance_cloud | default(omit) }}"
-        server: demo-*
-      register: demo_instances_info
+        server: dev-*
+      register: dev_instances_info
 
     - name: Add instances to inventory
       add_host:
         host: "{{ __instance.name }}"
         group: "{{ __instance.metadata.AnsibleGroup }}"
         ansible_host: "{{ __instance.private_v4 }}"
-      loop: "{{ demo_instances_info.openstack_servers }}"
+      loop: "{{ dev_instances_info.openstack_servers }}"
       loop_control:
         loop_var: __instance

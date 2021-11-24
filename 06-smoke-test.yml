@@ -9,7 +9,7 @@
     - name: 07 Smoke Tests | DB | Smoketest Postgres database
       postgresql_ping:
         db: flask_db
-        login_host: "{{ hostvars['demo-db'].ansible_host }}"
+        login_host: "{{ hostvars['dev-db'].ansible_host }}"
         login_user: flask
         login_password: redhat
         ssl_mode: disable
@@ -25,7 +25,7 @@
   tasks:
     - name: 07 Smoke Tests | Webserver | Check webserver for correct response
       uri:
-        url: "http://{{ hostvars['demo-lb'].ansible_host }}/ping"
+        url: "http://{{ hostvars['dev-lb'].ansible_host }}/ping"
         return_content: yes
       until: '"alive" in result.content'
       retries: 10

@@ -9,6 +9,6 @@
     - name: Populate hosts file
       lineinfile:
         path: /etc/hosts
-        line: "{{ hostvars['demo-db'].ansible_host }} appdb1"
+        line: "{{ hostvars['dev-db'].ansible_host }} appdb1"
   roles:
     - 04-setup-flask-application
