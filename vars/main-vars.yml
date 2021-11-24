@@ -1,5 +1,6 @@
 # Common vars
-GUID: "{{ lookup('env', 'GUID') | default(omit) }}"
+# GUID: "{{ lookup('env', 'GUID') | default(omit) }}"
+GUID: 05c1
 
 # Openstack instance variables
 instance_cloud: "{{ GUID }}-project"
