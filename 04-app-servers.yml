@@ -1,7 +1,7 @@
 ---
 - import_playbook: 00-in-memory-inventory.yml
 
-- name: Deploy, configure, and populate flask repo and virtualenv
+- name: 04 Application Servers | Deploy, configure, and populate flask repo and virtualenv
   hosts: app_servers
   become: true
   gather_facts: false
@@ -9,6 +9,6 @@
     - name: Populate hosts file
       lineinfile:
         path: /etc/hosts
-        line: "{{ hostvars['dev-db'].ansible_host }} appdb1"
+        line: "{{ hostvars['demo-db'].ansible_host }} appdb1"
   roles:
     - flask

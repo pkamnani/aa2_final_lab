@@ -1,7 +1,7 @@
 ---
 - import_playbook: 00-in-memory-inventory.yml
 
-- name: Teardown Postgres 14
+- name: 07 Teardown | Database | Teardown Postgres 14
   hosts: database_servers
   become: true
   gather_facts: false
@@ -17,13 +17,13 @@
     postgres_port: 5432
 
   tasks:
-    - name: Stop Postgres
+    - name: 07 Teardown | Database | Stop Postgres
       service:
         name: "{{ postgres_service }}"
         state: stopped
       failed_when: false
 
-    - name: Remove Postgres packages
+    - name: 07 Teardown | Database | Remove Postgres packages
       package:
         name: "{{ __package }}"
         state: absent
@@ -34,7 +34,7 @@
       loop_control:
         loop_var: __package
 
-    - name: Remove Postgres 14 data directory
+    - name: 07 Teardown | Database | Remove Postgres 14 data directory
       file:
         path: /var/lib/pgsql
         state: absent
@@ -44,7 +44,7 @@
         name: postgres
         state: absent
 
-- name: Teardown app_servers flask configuration
+- name: 07 Teardown | Application Servers | Teardown app_servers flask configuration
   hosts: app_servers
   become: true
   gather_facts: false
@@ -78,26 +78,26 @@
 
   tasks:
 
-    - name: Clean up service when it exists
+    - name: 07 Teardown | Load Balancers | Clean up service when it exists
       block:
 
-        - name: Check if systemd flask app service file exists
+        - name: 07 Teardown | Load Balancers | Check if systemd flask app service file exists
           stat:
             path: "/etc/systemd/system/{{ flask_app_name }}.service"
           register: r_flask_service
 
         - when: r_flask_service.stat.exists
-          name: Systemd configuration needs stopped and removed
+          name: 07 Teardown | Load Balancers | Systemd configuration needs stopped and removed
           block:
 
-            - name: Stop systemd flask app service
+            - name: 07 Teardown | Load Balancers | Stop systemd flask app service
               service: 
                 name: "{{ flask_app_name }}.service"
                 state: stopped
                 enabled: no
 #              ignore_errors: yes
 
-            - name: Remove systemd flask app service file
+            - name: 07 Teardown | Load Balancers | Remove systemd flask app service file
               file:
                 path: "{{ __path }}"
                 state: absent
@@ -107,19 +107,19 @@
               loop_control:
                 loop_var: __path
 
-    - name: Remove pre-requisite pip3 packages
+    - name: 07 Teardown | Load Balancers | Remove pre-requisite pip3 packages
       pip:
         name: "{{ pip_dependencies }}"
         state: absent
         executable: /usr/bin/pip
           #      ignore_errors: yes
 
-    - name: Remove flask user
+    - name: 07 Teardown | Load Balancers | Remove flask user
       user:
         name: "{{ flask_user }}"
         state: absent
 
-    - name: Remove app yum packages
+    - name: 07 Teardown | Load Balancers | Remove app yum packages
       package:
         name: "{{ __package }}"
         state: absent
@@ -127,7 +127,7 @@
       loop_control:
         loop_var: __package
 
-    - name: Remove flask repo and virtualenv
+    - name: 07 Teardown | Load Balancers | Remove flask repo and virtualenv
       file:
         path: "{{ __path }}"
         state: absent
@@ -137,7 +137,7 @@
       loop_control:
         loop_var: __path
 
-- name: Teardown haproxy load balancer
+- name: 07 Teardown | Load Balancers | Teardown haproxy load balancer
   hosts: load_balancers
   gather_facts: false 
   become: true
@@ -151,7 +151,7 @@
 
   tasks:
 
-    - name: Remove load balancer packages
+    - name: 07 Teardown | Load Balancers | Remove load balancer packages
       package:
         name: "{{ load_balancer_packages }}"
         state: absent
@@ -161,7 +161,7 @@
 #        path: /etc/haproxy/haproxy.cfg
 #        state: absent
 
-- name: Teardown app_servers flask configuration
+- name: 07 Teardown | Flask | Teardown app_servers flask configuration
   hosts: app_servers
   become: true
   gather_facts: false
@@ -195,26 +195,26 @@
 
   tasks:
 
-    - name: Clean up service when it exists
+    - name: 07 Teardown | Flask | Clean up service when it exists
       block:
 
-        - name: Check if systemd flask app service file exists
+        - name: 07 Teardown | Flask | Check if systemd flask app service file exists
           stat:
             path: "/etc/systemd/system/{{ flask_app_name }}.service"
           register: r_flask_service
 
         - when: r_flask_service.stat.exists
-          name: Systemd configuration needs stopped and removed
+          name: 07 Teardown | Flask | Systemd configuration needs stopped and removed
           block:
 
-            - name: Stop systemd flask app service
+            - name: 07 Teardown | Flask | Stop systemd flask app service
               service: 
                 name: "{{ flask_app_name }}.service"
                 state: stopped
                 enabled: no
 #              ignore_errors: yes
 
-            - name: Remove systemd flask app service file
+            - name: 07 Teardown | Flask | Remove systemd flask app service file
               file:
                 path: "{{ __path }}"
                 state: absent
@@ -224,19 +224,19 @@
               loop_control:
                 loop_var: __path
 
-    - name: Remove pre-requisite pip3 packages
+    - name: 07 Teardown | Flask | Remove pre-requisite pip3 packages
       pip:
         name: "{{ pip_dependencies }}"
         state: absent
         executable: /usr/bin/pip
           #      ignore_errors: yes
 
-    - name: Remove flask user
+    - name: 07 Teardown | Flask | Remove flask user
       user:
         name: "{{ flask_user }}"
         state: absent
 
-    - name: Remove app yum packages
+    - name: 07 Teardown | Flask | Remove app yum packages
       package:
         name: "{{ __package }}"
         state: absent
@@ -244,7 +244,7 @@
       loop_control:
         loop_var: __package
 
-    - name: Remove flask repo and virtualenv
+    - name: 07 Teardown | Flask | Remove flask repo and virtualenv
       file:
         path: "{{ __path }}"
         state: absent

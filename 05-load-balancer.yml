@@ -1,7 +1,7 @@
 ---
 - import_playbook: 00-in-memory-inventory.yml
 
-- name: Deploy haproxy load balancer
+- name: 05 Load Balancers | Deploy haproxy load balancer
   hosts: load_balancers
   gather_facts: false 
   become: true
