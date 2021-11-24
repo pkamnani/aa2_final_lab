@@ -18,4 +18,4 @@
       delay: 10
       retries: 12
   roles:
-    - satellite
+    - 02-perform-satellite-registration

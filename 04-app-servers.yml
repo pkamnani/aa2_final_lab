@@ -11,4 +11,4 @@
         path: /etc/hosts
         line: "{{ hostvars['demo-db'].ansible_host }} appdb1"
   roles:
-    - flask
+    - 04-setup-flask-application

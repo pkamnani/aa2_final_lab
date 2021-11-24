@@ -6,4 +6,4 @@
   become: true
   gather_facts: false
   roles:
-    - postgresql
+    - 03-setup-postgresql-database

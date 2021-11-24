@@ -6,4 +6,4 @@
   gather_facts: false 
   become: true
   roles:
-    - haproxy
+    - 05-setup-load-balancer

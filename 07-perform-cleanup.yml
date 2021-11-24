@@ -1,0 +1,11 @@
+---
+- import_playbook: 00-in-memory-inventory.yml
+
+- name: 07 Perform Cleanup
+  hosts: all
+  become: yes
+  gather_facts: no
+  vars_files:
+    - vars/main-vars.yml
+  roles:
+    - 06-cleanup-infra-and-app

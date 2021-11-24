@@ -1,0 +1,8 @@
+---
+
+- name: Cleanup | Tear Down Application
+  include_tasks: 01-teardown-app.yml
+
+- name: Cleanup | Tear Down Infrastructure
+  include_tasks: 01-teardown-infra.yml
+  
