@@ -1,6 +1,6 @@
 ---
 - name: 01 Infra Provision | Provision Openstack servers
-  hosts: localhost
+  #hosts: localhost
   vars_files:
     - vars/main-vars.yml
   tasks:
