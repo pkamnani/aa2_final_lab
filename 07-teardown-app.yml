@@ -15,6 +15,7 @@
     postgres_library: "python3-psycopg2"
     postgres_10_data_dir: /var/lib/pgsqldata
     postgres_port: 5432
+    postgres_service: postgresql-14.service
 
   tasks:
     - name: 07 Teardown | Database | Stop Postgres
