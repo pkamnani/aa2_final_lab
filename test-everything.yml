@@ -1,0 +1,9 @@
+---
+- import_playbook: 01-infra-provision.yml
+- import_playbook: 02-satellite-registration.yml
+- import_playbook: 03-setup-database.yml
+- import_playbook: 04-setup-app-servers.yml
+- import_playbook: 05-setup-load-balancer.yml
+- import_playbook: 06-perform-smoke-test.yml
+- import_playbook: 07-destroy-application-stack.yml
+- import_playbook: 08-destroy-infrastructure.yml

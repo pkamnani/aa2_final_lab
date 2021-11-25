@@ -1,8 +1,0 @@
-Host *
-  ForwardAgent yes
-  ControlMaster auto
-  ControlPath /tmp/%h-%r
-  ControlPersist 5m
-  StrictHostKeyChecking no
-  UserKnownHostsFile /dev/null
-
