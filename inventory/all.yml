@@ -1,0 +1,6 @@
+---
+all:
+  vars:
+    env_guid: "05c1"
+  hosts:
+    control: localhost
