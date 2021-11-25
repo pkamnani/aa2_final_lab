@@ -1,5 +1,7 @@
-# Sample Style Guide Used
+# Git Repo URL
 
+
+# Sample Style Guide Used
 - Boolean variables are to be either yes or no.  NOT true/false
 - Spaces in filenames should be represented by an underscore _
 - Spaces in varialbes should be represented by an underscore _
