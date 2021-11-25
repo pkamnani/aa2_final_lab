@@ -14,3 +14,6 @@ https://github.com/pkamnani/aa2_final_lab.git
 
 # test-everyting.yml 
 - file is to run the process end-to-end
+
+# playbook-run-results-for_test-everything.yml_.txt
+- file contains the last run of the playbook
