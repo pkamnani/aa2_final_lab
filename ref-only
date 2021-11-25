@@ -1,7 +1,12 @@
 # Git Repo URL
+<<<<<<< HEAD
 https://github.com/pkamnani/aa2_final_lab.git
 # Images Directory
 - the .images directory contains details from Ansible Tower
+=======
+
+
+>>>>>>> 2c8d37f2dc7ebe5c4f9cd8bc633a673b451ec7e9
 # Sample Style Guide Used
 - Boolean variables are to be either yes or no.  NOT true/false
 - Spaces in filenames should be represented by an underscore _
