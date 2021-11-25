@@ -1,6 +1,6 @@
 ---
 - name: 00 In Memory Inventory | Populate In Memory Inventory
-  hosts: localhost
+  hosts: control
   gather_facts: false
   vars_files:
     - vars/main-vars.yml
@@ -20,3 +20,4 @@
       loop: "{{ dev_instances_info.openstack_servers }}"
       loop_control:
         loop_var: __instance
+        
