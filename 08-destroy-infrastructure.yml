@@ -1,6 +1,6 @@
 ---
 - name: 08 Teardown | Infrastructure | Cleanup infra resources
-  hosts: localhost
+  hosts: control
   vars_files:
     - vars/main-vars.yml
   tasks:
