@@ -7,8 +7,8 @@
   tasks:
     - name: Collect instances info
       os_server_info:
-        cloud: "{{ instance_cloud | default(omit) }}"
-        server: dev-*
+        #cloud: "{{ instance_cloud | default(omit) }}"
+        #server: dev-*
       register: dev_instances_info
 
     - name: Add instances to inventory
