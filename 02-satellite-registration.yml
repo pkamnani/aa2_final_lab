@@ -2,7 +2,7 @@
 - import_playbook: 00-in-memory-inventory.yml
 
 - name: 02 Satellite Registration | Register instances to Satellite
-  hosts: database_servers 
+  hosts: all 
   become: yes
   gather_facts: no
   vars_files:
